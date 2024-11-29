@@ -44,7 +44,7 @@
 <!-- Custom styles for the webpage --> 
     <style>
         :root {
-            /* Define custom properties (variables) for the theme colors */
+            /* Twitter/X Dark Theme Colors */
             --primary-color: #1D9BF0;
             --hover-color: #1A8CD8;
             --bg-dark: #000000;
@@ -86,6 +86,21 @@
             display: flex;
             flex-direction: column;
             z-index: 1000;
+        }
+
+        /* Sidebar Search */
+        .sidebar-search {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-search input {
+            width: 100%;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
         }
 
         /* New chat button styling */
@@ -177,6 +192,13 @@
             padding: 1rem;
             border-radius: 16px;
             border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        /* Hover effect for message bubble */
+        .message-bubble:hover {
+            transform: translateY(-2px);
         }
 
         /* User message bubble styling */
@@ -213,6 +235,27 @@
             font-size: 0.9rem;
         }
 
+        /* Format buttons styling */
+        .format-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .format-buttons button {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .format-buttons button:hover {
+            background: var(--bg-dark);
+        }
+
         /* Send button styling */
         .input-container {
             border-top: 1px solid var(--border-color);
@@ -234,7 +277,7 @@
         .prompt-input {
             width: 100%;
             padding: 1rem;
-            padding-right: 3rem;
+            padding-right: 6rem;
             background: transparent;
             border: none;
             color: var(--text-primary);
@@ -275,6 +318,29 @@
 
         /* Hover effect for send button */
         .send-button:hover {
+            background: var(--hover-color);
+        }
+
+        /* Voice button styling */
+        .voice-button {
+            position: absolute;
+            right: 4.75rem;
+            bottom: 0.75rem;
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        /* Hover effect for voice button */
+        .voice-button:hover {
             background: var(--hover-color);
         }
 
@@ -364,17 +430,16 @@
 
         /* Fade in animation */
         @keyframes typing {
-            0%, 60%, 100% {
+            0%, 100% {
                 transform: translateY(0);
                 opacity: 0.4;
             }
-            30% {
+            50% {
                 transform: translateY(-4px);
                 opacity: 1;
             }
         }
 
-        /* Modal Styles */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -393,8 +458,12 @@
         <i class="fas fa-bars"></i>
     </button>
 
-     <!-- Sidebar container -->
+    <!-- Sidebar container -->
     <div class="sidebar" id="sidebar">
+        <!-- Sidebar Search -->
+        <div class="sidebar-search">
+            <input type="text" id="searchInput" placeholder="Search conversations..." oninput="filterChats()">
+        </div>
         <!-- New chat button -->
         <button class="new-chat-btn" onclick="startNewChat()">
             <i class="fas fa-plus"></i>
@@ -404,10 +473,16 @@
         <div class="chat-history" id="chatHistory"></div>
     </div>
 
-    <!-- Modal content -->
+    <!-- Main content area -->
     <div class="main-content">
-        <!-- Modal header -->
+        <!-- Chat container -->
         <div class="chat-container" id="chatContainer"></div>
+        <!-- Format buttons -->
+        <div class="format-buttons">
+            <button onclick="formatText('bold')">Bold</button>
+            <button onclick="formatText('italic')">Italic</button>
+            <button onclick="formatText('code')">Code</button>
+        </div>
         <!-- Input container -->
         <div class="input-container">
             <!-- Input wrapper -->
@@ -421,6 +496,10 @@
                     onInput="autoResize(this)"
                     onkeydown="handleKeyDown(event)"
                 ></textarea>
+                <!-- Voice button -->
+                <button class="voice-button" id="voiceButton" onclick="startVoiceInput()" title="Voice Input">
+                    <i class="fas fa-microphone"></i>
+                </button>
                 <!-- Send button -->
                 <button class="send-button" id="sendButton" onclick="generateContent()" title="Send message">
                     <i class="fas fa-paper-plane"></i>
@@ -429,13 +508,12 @@
         </div>
     </div>
 
-    <!-- Theme toggle button -->
+    <!-- Brand styling -->
     <div class="brand">
         Made with <i class="fas fa-heart"></i> by Dragon Team
     </div>
 
     <!-- JavaScript for interactive elements -->
-    <!-- Theme toggle button -->
     <script>
         let chatHistory = [];
         let currentChatId = Date.now();
@@ -520,17 +598,17 @@
         }
 
         // Add a message to the chat container
-        function addMessage(content, isUser  = false) {
+        function addMessage(content, isUser = false) {
             const chatContainer = document.getElementById('chatContainer');
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser  ? 'user' : 'ai'}`;
+            messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
 
-            const formattedContent = isUser  ? content : formatContent(content);
+            const formattedContent = isUser ? content : formatContent(content);
 
             messageDiv.innerHTML = `
                 <div class="message-header">
-                    <i class="fas ${isUser  ? 'fa-user' : 'fa-robot'}"></i>
-                    ${isUser  ? 'You' : 'Dragon AI Assistant'}
+                    <i class="fas ${isUser ? 'fa-user' : 'fa-robot'}"></i>
+                    ${isUser ? 'You' : 'Dragon AI Assistant'}
                 </div>
                 <div class="message-bubble">
                     <div class="message-content">
@@ -546,7 +624,7 @@
                 hljs.highlightBlock(block);
             });
 
-            if (isUser ) {
+            if (isUser) {
                 const historyItem = {
                     id: currentChatId,
                     lastPrompt: content,
@@ -640,54 +718,52 @@
             }
         }
 
-        // Toggle between dark and light theme
-        function toggleTheme() {
-            const html = document.documentElement;
-            const isDark = html.getAttribute('data-theme') === 'dark';
-            const newTheme = isDark ? 'light' : 'dark';
+        // Format text in the prompt input
+        function formatText(formatType) {
+            const textarea = document.getElementById('promptInput');
+            const selectionStart = textarea.selectionStart;
+            const selectionEnd = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(selectionStart, selectionEnd);
 
-            html.setAttribute('data-theme', newTheme);
-            const icon = document.querySelector('.theme-toggle i');
-            icon.className = `fas fa-${isDark ? 'sun' : 'moon'}`;
-            const codeTheme = document.getElementById('code-theme');
-            codeTheme.href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/${isDark ? 'github-dark' : 'github'}.min.css`;
-            localStorage.setItem('theme', newTheme);
-        }
-
-        // Show the guide modal
-        function showGuide() {
-            document.getElementById('guideModal').classList.add('show');
-        }
-
-        // Show the privacy modal
-        function showPrivacy() {
-            document.getElementById('privacyModal').classList.add('show');
-        }
-
-        // Close the specified modal
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('show');
-        }
-
-        // Add event listener for click events to close modals
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal')) {
-                e.target.classList.remove('show');
+            let formattedText;
+            if (formatType === 'bold') {
+                formattedText = `**${selectedText}**`;
+            } else if (formatType === 'italic') {
+                formattedText = `*${selectedText}*`;
+            } else if (formatType === 'code') {
+                formattedText = `\`${selectedText}\``;
             }
-        });
 
-        // Add event listener for keydown events
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(modal => {
-                    modal.classList.remove('show');
-                });
+            textarea.value = textarea.value.substring(0, selectionStart) + formattedText + textarea.value.substring(selectionEnd);
+            textarea.selectionStart = selectionStart + formattedText.length - selectedText.length;
+            textarea.selectionEnd = textarea.selectionStart;
+            textarea.focus();
+        }
+
+        // Start voice input
+        function startVoiceInput() {
+            if ('webkitSpeechRecognition' in window) {
+                const recognition = new webkitSpeechRecognition();
+                recognition.onresult = function(event) {
+                    document.getElementById('promptInput').value = event.results[0][0].transcript;
+                    generateContent();
+                };
+                recognition.start();
+            } else {
+                alert('Voice input is not supported in this browser.');
             }
-            if (e.key === '/' && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                toggleTheme();
-            }
-        });
+        }
+
+        // Filter chat history based on search input
+        function filterChats() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const historyItems = document.querySelectorAll('.history-item');
+            
+            historyItems.forEach(item => {
+                const text = item.querySelector('span').textContent.toLowerCase();
+                item.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
 
         // Initialize the theme and chat history on DOM content loaded
         window.addEventListener('DOMContentLoaded', function() {
