@@ -1,5 +1,7 @@
 # 🐉 Dragon AI
 
+![Preview 1](/img/Preview.png)
+
 <div align="center">
 
 [![Play Demo](https://img.shields.io/badge/▶️_Play_Demo-000?style=for-the-badge)](https://dragon-ai-assistant.vercel.app)
@@ -39,7 +41,7 @@ Or run locally:
 ```bash
 # Clone repository
 git clone https://github.com/bniladridas/dragon-ai-assistant.git
-cd dragon-ai
+cd dragon-ai-assistant
 
 # Install Vercel CLI
 npm i -g vercel
