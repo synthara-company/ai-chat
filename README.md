@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Play Demo](https://img.shields.io/badge/▶️_Play_Demo-000?style=for-the-badge)](https://dragon-ai-pi.vercel.app)
+[![Play Demo](https://img.shields.io/badge/▶️_Play_Demo-000?style=for-the-badge)](https://dragon-ai-assistant.vercel.app)
 [![Documentation](https://img.shields.io/badge/📚_Docs-000?style=for-the-badge)](https://dragon-ai.vercel.app/docs)
 [![GitHub](https://img.shields.io/badge/👩‍💻_GitHub-000?style=for-the-badge)](https://github.com/bniladridas/dragon-ai)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
@@ -20,7 +20,7 @@
   <sub>Built with Flask 3, Vercel, and modern web technologies 🚀</sub>
 </p>
 
-[Demo](https://dragon-ai-pi.vercel.app) • 
+[Demo](https://dragon-ai-assistant.vercel.app/) • 
 [Documentation](https://dragon-ai.vercel.app/docs) • 
 [Quick Start](#quick-start) • 
 [Deployment](#deployment) • 
@@ -31,14 +31,14 @@
 ## 🎮 Quick Start
 
 Try Dragon AI instantly:
-1. 🌐 Visit [https://dragon-ai-pi.vercel.app](https://dragon-ai-pi.vercel.app)
+1. 🌐 Visit [https://dragon-ai-assistant.vercel.app/](https://dragon-ai-assistant.vercel.app/)
 2. 🔒 No signup required
 3. 💬 Start chatting with the AI
 
 Or run locally:
 ```bash
 # Clone repository
-git clone https://github.com/bniladridas/dragon-ai.git
+git clone https://github.com/bniladridas/dragon-ai-assistant.git
 cd dragon-ai
 
 # Install Vercel CLI
