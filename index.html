@@ -42,415 +42,436 @@
     <meta name="github:topics" content="AI, Artificial Intelligence, Machine Learning, Deep Learning">
 
 <!-- Custom styles for the webpage --> 
-    <style>
-        :root {
-            /* Twitter/X Dark Theme Colors */
-            --primary-color: #1D9BF0;
-            --hover-color: #1A8CD8;
-            --bg-dark: #000000;
-            --bg-secondary: #16181C;
-            --text-primary: #E7E9EA;
-            --text-secondary: #71767B;
-            --border-color: #2F3336;
-            --bubble-user: #1D9BF0;
-            --bubble-ai: #16181C;
-            --sidebar-width: 300px;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --code-font: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            --shadow-color: rgba(255, 255, 255, 0.1);
-        }
-        /* Reset default styling */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        /* Body styling */
-        body {
-            font-family: var(--font-family);
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
+<style>
+    :root {
+        /* Twitter/X Dark Theme Colors */
+        --primary-color: #1D9BF0;
+        --hover-color: #1A8CD8;
+        --bg-dark: #000000;
+        --bg-secondary: #16181C;
+        --text-primary: #E7E9EA;
+        --text-secondary: #71767B;
+        --border-color: #2F3336;
+        --bubble-user: #1D9BF0;
+        --bubble-ai: #16181C;
+        --sidebar-width: 300px;
+        --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --code-font: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        --shadow-color: rgba(255, 255, 255, 0.1);
+    }
+    /* Reset default styling */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    /* Body styling */
+    body {
+        font-family: var(--font-family);
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        line-height: 1.6;
+    }
 
-        /* Sidebar Styles */
+    /* Sidebar Styles */
+    .sidebar {
+        width: var(--sidebar-width);
+        background: var(--bg-dark);
+        border-right: 1px solid var(--border-color);
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
+
+    /* Sidebar Search */
+    .sidebar-search {
+        margin-bottom: 1rem;
+    }
+
+    .sidebar-search input {
+        width: 100%;
+        padding: 0.5rem;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        color: var(--text-primary);
+        font-size: 1rem;
+    }
+
+    /* New chat button styling */
+    .new-chat-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 9999px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        width: 100%;
+        transition: background 0.2s;
+    }
+
+    /* Hover effect for new chat button */
+    .new-chat-btn:hover {
+        background: var(--hover-color);
+    }
+
+    /* Chat history container styling */
+    .chat-history {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    /* Individual chat history item styling */
+    .history-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: 9999px;
+        color: var(--text-primary);
+        transition: background 0.2s;
+    }
+
+     /* Hover effect for chat history item */
+    .history-item:hover {
+        background: var(--bg-secondary);
+    }
+
+     /* Main content area styling */
+    .main-content {
+        margin-left: var(--sidebar-width);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-dark);
+    }
+
+    /* Chat container styling */
+    .chat-container {
+        flex: 1;
+        padding: 2rem;
+        overflow-y: auto;
+    }
+
+    /* Message styling */
+    .message {
+        max-width: 80%;
+        margin-bottom: 1.5rem;
+        animation: fadeIn 0.3s ease;
+    }
+
+    /* User message alignment */
+    .message.user {
+        margin-left: auto;
+    }
+
+    /* Message header styling */
+    .message-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+    }
+
+    /* Message bubble styling */
+    .message-bubble {
+        padding: 1rem;
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    /* Hover effect for message bubble */
+    .message-bubble:hover {
+        transform: translateY(-2px);
+    }
+
+    /* User message bubble styling */
+    .user .message-bubble {
+        background: var(--bubble-user);
+        border: none;
+        color: white;
+    }
+
+    /* AI message bubble styling */
+    .ai .message-bubble {
+        background: var(--bubble-ai);
+        color: var(--text-primary);
+    }
+
+    /* Message content styling */
+    .message-content {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    /* Preformatted text styling */
+    .message-content pre {
+        background: var(--bg-secondary);
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 0.5rem 0;
+        border: 1px solid var(--border-color);
+        position: relative;
+    }
+
+    /* Code block styling */
+    .message-content code {
+        font-family: var(--code-font);
+        font-size: 0.9rem;
+    }
+
+    /* Copy button styling */
+    .copy-code-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: var(--bg-secondary);
+        border: none;
+        color: var(--text-primary);
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.2s;
+        z-index: 10;
+    }
+
+    /* Hover effect for copy button */
+    .copy-code-btn:hover {
+        background: var(--bg-dark);
+    }
+
+    /* Format buttons styling */
+    .format-buttons {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .format-buttons button {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .format-buttons button:hover {
+        background: var(--bg-dark);
+    }
+
+    /* Send button styling */
+    .input-container {
+        border-top: 1px solid var(--border-color);
+        padding: 1rem 2rem;
+        background: var(--bg-dark);
+    }
+
+    /* Input wrapper styling */
+    .input-wrapper {
+        max-width: 768px;
+        margin: 0 auto;
+        position: relative;
+        background: var(--bg-secondary);
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+    }
+
+    /* Prompt input styling */
+    .prompt-input {
+        width: 100%;
+        padding: 1rem;
+        padding-right: 6rem;
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        resize: none;
+        min-height: 56px;
+        max-height: 200px;
+        font-family: var(--font-family);
+    }
+    
+    /* Focus effect for prompt input */
+    .prompt-input:focus {
+        outline: none;
+    }
+
+    /* Placeholder styling for prompt input */
+    .prompt-input::placeholder {
+        color: var(--text-secondary);
+    }
+
+    /* Send button styling */
+    .send-button {
+        position: absolute;
+        right: 0.75rem;
+        bottom: 0.75rem;
+        background: var(--primary-color);
+        border: none;
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+    }
+
+    /* Hover effect for send button */
+    .send-button:hover {
+        background: var(--hover-color);
+    }
+
+    /* Voice button styling */
+    .voice-button {
+        position: absolute;
+        right: 4.75rem;
+        bottom: 0.75rem;
+        background: var(--primary-color);
+        border: none;
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+    }
+
+    /* Hover effect for voice button */
+    .voice-button:hover {
+        background: var(--hover-color);
+    }
+
+    /* Brand styling */
+    .brand {
+        position: fixed;
+        bottom: 2rem;
+        left: 1rem;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        z-index: 1000;
+    }
+
+    /* Theme toggle button styling */
+    .brand i {
+        color: var(--primary-color);
+    }
+    
+    /* Mobile Styles */
+    .mobile-menu-btn {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: transparent;
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text-primary);
+    }
+
+    /* Modal Styles */
+    @media (max-width: 768px) {
         .sidebar {
-            width: var(--sidebar-width);
-            background: var(--bg-dark);
-            border-right: 1px solid var(--border-color);
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar.open {
+            transform: translateX(0);
         }
 
-        /* Sidebar Search */
-        .sidebar-search {
-            margin-bottom: 1rem;
-        }
-
-        .sidebar-search input {
-            width: 100%;
-            padding: 0.5rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 1rem;
-        }
-
-        /* New chat button styling */
-        .new-chat-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 9999px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        /* Hover effect for new chat button */
-        .new-chat-btn:hover {
-            background: var(--hover-color);
-        }
-
-        /* Chat history container styling */
-        .chat-history {
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        /* Individual chat history item styling */
-        .history-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            cursor: pointer;
-            border-radius: 9999px;
-            color: var(--text-primary);
-            transition: background 0.2s;
-        }
-
-         /* Hover effect for chat history item */
-        .history-item:hover {
-            background: var(--bg-secondary);
-        }
-
-         /* Main content area styling */
         .main-content {
-            margin-left: var(--sidebar-width);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: var(--bg-dark);
+            margin-left: 0;
         }
 
-        /* Chat container styling */
-        .chat-container {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-        }
-
-        /* Message styling */
-        .message {
-            max-width: 80%;
-            margin-bottom: 1.5rem;
-            animation: fadeIn 0.3s ease;
-        }
-
-        /* User message alignment */
-        .message.user {
-            margin-left: auto;
-        }
-
-        /* Message header styling */
-        .message-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
-        /* Message bubble styling */
-        .message-bubble {
-            padding: 1rem;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-        }
-
-        /* Hover effect for message bubble */
-        .message-bubble:hover {
-            transform: translateY(-2px);
-        }
-
-        /* User message bubble styling */
-        .user .message-bubble {
-            background: var(--bubble-user);
-            border: none;
-            color: white;
-        }
-
-        /* AI message bubble styling */
-        .ai .message-bubble {
-            background: var(--bubble-ai);
-            color: var(--text-primary);
-        }
-
-        /* Message content styling */
-        .message-content {
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        /* Preformatted text styling */
-        .message-content pre {
-            background: var(--bg-secondary);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 0.5rem 0;
-            border: 1px solid var(--border-color);
-        }
-
-        /* Code block styling */
-        .message-content code {
-            font-family: var(--code-font);
-            font-size: 0.9rem;
-        }
-
-        /* Format buttons styling */
-        .format-buttons {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .format-buttons button {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .format-buttons button:hover {
-            background: var(--bg-dark);
-        }
-
-        /* Send button styling */
-        .input-container {
-            border-top: 1px solid var(--border-color);
-            padding: 1rem 2rem;
-            background: var(--bg-dark);
-        }
-
-        /* Input wrapper styling */
-        .input-wrapper {
-            max-width: 768px;
-            margin: 0 auto;
-            position: relative;
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-        }
-
-        /* Prompt input styling */
-        .prompt-input {
-            width: 100%;
-            padding: 1rem;
-            padding-right: 6rem;
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            resize: none;
-            min-height: 56px;
-            max-height: 200px;
-            font-family: var(--font-family);
-        }
-        
-        /* Focus effect for prompt input */
-        .prompt-input:focus {
-            outline: none;
-        }
-
-        /* Placeholder styling for prompt input */
-        .prompt-input::placeholder {
-            color: var(--text-secondary);
-        }
-
-        /* Send button styling */
-        .send-button {
-            position: absolute;
-            right: 0.75rem;
-            bottom: 0.75rem;
-            background: var(--primary-color);
-            border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-
-        /* Hover effect for send button */
-        .send-button:hover {
-            background: var(--hover-color);
-        }
-
-        /* Voice button styling */
-        .voice-button {
-            position: absolute;
-            right: 4.75rem;
-            bottom: 0.75rem;
-            background: var(--primary-color);
-            border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-
-        /* Hover effect for voice button */
-        .voice-button:hover {
-            background: var(--hover-color);
-        }
-
-        /* Brand styling */
-        .brand {
-            position: fixed;
-            bottom: 2rem;
-            left: 1rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            z-index: 1000;
-        }
-
-        /* Theme toggle button styling */
-        .brand i {
-            color: var(--primary-color);
-        }
-        
-        /* Mobile Styles */
         .mobile-menu-btn {
-            display: none;
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1001;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-primary);
-        }
-
-        /* Modal Styles */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-            }
-            
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .message {
-                max-width: 90%;
-            }
-
-            .brand {
-                display: none;
-            }
-        }
-
-        /* Loading Animation */
-        .typing-indicator {
             display: flex;
-            gap: 0.5rem;
-            padding: 1rem;
-        }
-        
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
         }
 
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
+        .message {
+            max-width: 90%;
         }
 
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
+        .brand {
+            display: none;
         }
+    }
 
-        /* Fade in animation */
-        @keyframes typing {
-            0%, 100% {
-                transform: translateY(0);
-                opacity: 0.4;
-            }
-            50% {
-                transform: translateY(-4px);
-                opacity: 1;
-            }
-        }
+    /* Loading Animation */
+    .typing-indicator {
+        display: flex;
+        gap: 0.5rem;
+        padding: 1rem;
+    }
+    
+    .typing-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        animation: typing 1.4s infinite ease-in-out;
+    }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+    .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    /* Fade in animation */
+    @keyframes typing {
+        0%, 100% {
+            transform: translateY(0);
+            opacity: 0.4;
         }
-    </style>
+        50% {
+            transform: translateY(-4px);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
 </head>
 <body>
     <!-- Modal Container -->
@@ -518,7 +539,7 @@
         let chatHistory = [];
         let currentChatId = Date.now();
         let isGenerating = false;
-
+    
         // Initialize marked with options
         marked.setOptions({
             highlight: function(code, lang) {
@@ -530,18 +551,18 @@
             breaks: true,
             gfm: true
         });
-        
+    
         // Automatically resize the textarea based on its content
         function autoResize(textarea) {
             textarea.style.height = 'auto';
             textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
         }
-
+    
         // Toggle the sidebar visibility on mobile devices
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
         }
-
+    
         // Start a new chat session
         function startNewChat() {
             currentChatId = Date.now();
@@ -551,14 +572,14 @@
                 toggleSidebar();
             }
         }
-
+    
         // Show typing indicator while generating content
         function showTypingIndicator() {
             const chatContainer = document.getElementById('chatContainer');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message ai';
             messageDiv.id = 'typingIndicator';
-
+    
             messageDiv.innerHTML = `
                 <div class="message-header">
                     <i class="fas fa-robot"></i>
@@ -572,11 +593,11 @@
                     </div>
                 </div>
             `;
-
+    
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-
+    
         // Remove typing indicator after content is generated
         function removeTypingIndicator() {
             const indicator = document.getElementById('typingIndicator');
@@ -584,7 +605,7 @@
                 indicator.remove();
             }
         }
-
+    
         // Format content based on its type (JSON or Markdown)
         function formatContent(content) {
             try {
@@ -596,15 +617,15 @@
                 return marked.parse(content);
             }
         }
-
+    
         // Add a message to the chat container
         function addMessage(content, isUser = false) {
             const chatContainer = document.getElementById('chatContainer');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
-
+    
             const formattedContent = isUser ? content : formatContent(content);
-
+    
             messageDiv.innerHTML = `
                 <div class="message-header">
                     <i class="fas ${isUser ? 'fa-user' : 'fa-robot'}"></i>
@@ -616,14 +637,25 @@
                     </div>
                 </div>
             `;
-
+    
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
-
+    
             messageDiv.querySelectorAll('pre code').forEach((block) => {
+                // Create a copy button
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-code-btn';
+                copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+                copyButton.title = 'Copy code to clipboard';
+                copyButton.onclick = () => copyCode(block);
+    
+                // Append the copy button to the pre element
+                const preElement = block.parentElement;
+                preElement.appendChild(copyButton);
+    
                 hljs.highlightBlock(block);
             });
-
+    
             if (isUser) {
                 const historyItem = {
                     id: currentChatId,
@@ -631,7 +663,7 @@
                     messages: chatContainer.innerHTML,
                     timestamp: new Date()
                 };
-
+    
                 const existingChatIndex = chatHistory.findIndex(chat => chat.id === currentChatId);
                 if (existingChatIndex === -1) {
                     chatHistory.unshift(historyItem);
@@ -641,7 +673,25 @@
                 updateChatHistory();
             }
         }
-
+    
+        // Copy code to clipboard
+        function copyCode(codeElement) {
+            // Create a temporary textarea to hold the code
+            const textarea = document.createElement('textarea');
+            textarea.value = codeElement.textContent;
+            document.body.appendChild(textarea);
+            
+            // Select and copy the code
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Remove the textarea
+            document.body.removeChild(textarea);
+            
+            // Show a toast notification or alert that the code has been copied
+            alert('Code copied to clipboard!');
+        }
+    
         // Update the chat history in the sidebar
         function updateChatHistory() {
             const historyContainer = document.getElementById('chatHistory');
@@ -652,7 +702,7 @@
                 </div>
             `).join('');
         }
-
+    
         // Load a chat session from the chat history
         function loadChat(chatId) {
             currentChatId = chatId;
@@ -664,22 +714,22 @@
                 toggleSidebar();
             }
         }
-
+    
         // Generate content based on the user's prompt
         async function generateContent() {
             if (isGenerating) return;
-
+    
             const promptInput = document.getElementById('promptInput');
             const prompt = promptInput.value.trim();
-
+    
             if (!prompt) return;
-
+    
             isGenerating = true;
             addMessage(prompt, true);
             promptInput.value = ''; // Clear the input field
             promptInput.style.height = 'auto';  // Reset the height of the input field to auto
             showTypingIndicator();  // Show typing indicator while waiting for the response
-
+    
             try {
                 // Send a POST request to the server with the prompt and chatId
                 const response = await fetch('/generate', {
@@ -692,17 +742,17 @@
                         chatId: currentChatId
                     })
                 });
-
+    
                 // Check if the response is not ok (status code not in the range 200-299)
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-
+    
                 // Parse the response data as JSON
                 const data = await response.json();
                 removeTypingIndicator();    // Remove the typing indicator after receiving the response
                 addMessage(data.response);  // Add the response message to the chat
-
+    
             } catch (error) {
                 removeTypingIndicator();    // Remove the typing indicator if there is an error
                 addMessage("Sorry, there was an error generating the content. Please try again.");
@@ -710,21 +760,21 @@
                 isGenerating = false;   // Reset the isGenerating flag
             }
         }
-
+    
         function handleKeyDown(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault(); // Prevents adding a new line
                 generateContent();  // Generate content on Enter key press
             }
         }
-
+    
         // Format text in the prompt input
         function formatText(formatType) {
             const textarea = document.getElementById('promptInput');
             const selectionStart = textarea.selectionStart;
             const selectionEnd = textarea.selectionEnd;
             const selectedText = textarea.value.substring(selectionStart, selectionEnd);
-
+    
             let formattedText;
             if (formatType === 'bold') {
                 formattedText = `**${selectedText}**`;
@@ -733,13 +783,13 @@
             } else if (formatType === 'code') {
                 formattedText = `\`${selectedText}\``;
             }
-
+    
             textarea.value = textarea.value.substring(0, selectionStart) + formattedText + textarea.value.substring(selectionEnd);
             textarea.selectionStart = selectionStart + formattedText.length - selectedText.length;
             textarea.selectionEnd = textarea.selectionStart;
             textarea.focus();
         }
-
+    
         // Start voice input
         function startVoiceInput() {
             if ('webkitSpeechRecognition' in window) {
@@ -753,7 +803,7 @@
                 alert('Voice input is not supported in this browser.');
             }
         }
-
+    
         // Filter chat history based on search input
         function filterChats() {
             const query = document.getElementById('searchInput').value.toLowerCase();
@@ -764,29 +814,31 @@
                 item.style.display = text.includes(query) ? 'flex' : 'none';
             });
         }
-
+    
         // Initialize the theme and chat history on DOM content loaded
         window.addEventListener('DOMContentLoaded', function() {
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
                 document.documentElement.setAttribute('data-theme', savedTheme);
                 const icon = document.querySelector('.theme-toggle i');
-                icon.className = `fas fa-${savedTheme === 'dark' ? 'moon' : 'sun'}`;
+                if (icon) {
+                    icon.className = `fas fa-${savedTheme === 'dark' ? 'moon' : 'sun'}`;
+                }
             }
         });
-
+    
         // Initialize textarea resizing and load chat history on window load
         window.onload = function() {
             const textarea = document.getElementById('promptInput');
             autoResize(textarea);
             loadChatHistory();
         };
-
+    
         // Save chat history to local storage
         function saveChatHistory() {
             localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
         }
-
+    
         // Load chat history from local storage
         function loadChatHistory() {
             const saved = localStorage.getItem('chatHistory');
@@ -795,7 +847,7 @@
                 updateChatHistory();
             }
         }
-
+    
         // Save chat history before the window unloads
         window.addEventListener('beforeunload', saveChatHistory);
     </script>
