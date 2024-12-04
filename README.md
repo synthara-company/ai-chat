@@ -184,7 +184,7 @@ Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_mediu
 
 ### Prerequisites
 - Python 3.8+
-- Node.js 14+
+- Flask
 - Google Cloud API key
 - Vercel account
 
