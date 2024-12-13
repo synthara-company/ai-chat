@@ -6,7 +6,7 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 
-app = Flask(__name__, static_folder='.')
+app = Flask(__name__, static_folder='../')
 
 # Configure the API key from the environment variable
 genai.configure(api_key=os.getenv('GOOGLE_API_KEY'))
