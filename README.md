@@ -8,7 +8,7 @@ A web-based chat interface powered by Flask and Google Gemini, designed for inte
 
 *   **Backend Framework:** [Flask](https://flask.palletsprojects.com/)
 *   **Programming Language:** [Python 3](https://www.python.org/)
-*   **AI Model Integration:** [Google Generative AI SDK for Python](https://github.com/google/generative-ai-python) (`google-generativeai`) using Gemini (`gemini-1.5-pro-latest`).
+*   **AI Model Integration:** [Google Generative AI SDK for Python](https://github.com/google/generative-ai-python) (`google-generativeai`) using Gemini (`gemini-2.5-pro-exp-03-25`).
 *   **Environment Variable Management:** [python-dotenv](https://github.com/theskumar/python-dotenv)
 *   **Frontend:** HTML, CSS, JavaScript (with Marked.js for Markdown and Highlight.js for code syntax).
 *   **Deployment:** Configured for [Vercel](https://vercel.com/).
@@ -33,7 +33,7 @@ This application utilizes the following core technologies:
 
 *   **Backend Framework:** [Flask](https://flask.palletsprojects.com/) - A lightweight WSGI web application framework in Python used to build the web server and API endpoints.
 *   **Programming Language:** [Python 3](https://www.python.org/)
-*   **AI Model Integration:** [Google Generative AI SDK for Python](https://github.com/google/generative-ai-python) (`google-generativeai`) - Used to interact with Google's Generative AI models (specifically configured for a Gemini model like `gemini-1.5-pro-latest` in the example).
+*   **AI Model Integration:** [Google Generative AI SDK for Python](https://github.com/google/generative-ai-python) (`google-generativeai`) - Used to interact with Google's Generative AI models (specifically configured for the experimental Gemini model `gemini-2.5-pro-exp-03-25`).
 *   **Environment Variable Management:** [python-dotenv](https://github.com/theskumar/python-dotenv) - Used to load environment variables (like API keys) from a `.env` file into the application's environment.
 *   **API Endpoint:**
     *   `/generate` (POST): Accepts a JSON payload with a `prompt` key and returns a JSON response containing the AI-generated text or a predefined response.
@@ -54,8 +54,8 @@ This application utilizes the following core technologies:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/bniladridas/synthara-ai-chat.git
-    cd synthara-ai-chat
+    git clone https://github.com/bniladridas/synthara-ai.git
+    cd synthara-ai
     ```
 2.  **Create and activate a virtual environment:**
     ```bash
@@ -74,9 +74,9 @@ This application utilizes the following core technologies:
         ```
 5.  **Run the application:**
     ```bash
-    flask run # Or python app.py
+    python3 api/index.py 
     ```
-    Access the application at `http://127.0.0.1:5000`.
+    Access the application at `http://127.0.0.1:5001`.
 
 ## Deployment to Vercel
 
@@ -110,3 +110,82 @@ This application utilizes the following core technologies:
 * Add more robust error handling
 * Implement chat session persistence beyond local storage
 * Refine the UI/UX
+
+## Testing & Verification
+
+Here are recommended test prompts to verify Synthara's capabilities and behaviors:
+
+### Test Categories
+
+1. **Identity & Capabilities Check**
+   - Ask about Synthara's purpose and features
+   - Verify knowledge about its technical stack
+   - Test understanding of its limitations
+
+2. **Code-Related Prompts**
+   - Request code examples in different languages
+   - Ask for code explanations
+   - Debug sample code issues
+
+3. **Technical Explanations**
+   - Request explanations of technical concepts
+   - Ask about software development practices
+   - Inquire about architectural patterns
+
+4. **Mixed Format Responses**
+   - Prompts requiring code, text, and lists
+   - Questions needing diagrams or tables
+   - Multi-part technical explanations
+
+5. **Edge Cases**
+   - Very long prompts
+   - Multi-language code requests
+   - Complex technical scenarios
+
+6. **Project-Specific**
+   - Questions about Flask implementation
+   - Google Gemini API integration
+   - Frontend-backend interaction
+
+7. **Code Review Scenarios**
+   - Code improvement suggestions
+   - Best practices review
+   - Performance optimization tips
+
+8. **Complex Technical Discussions**
+   - System architecture discussions
+   - Technology stack comparisons
+   - Implementation trade-offs
+
+### Verification Checklist
+
+Ensure Synthara:
+- [ ] Maintains consistent identity
+- [ ] Uses proper markdown formatting
+- [ ] Provides syntax-highlighted code
+- [ ] Gives technically accurate responses
+- [ ] Keeps a professional yet friendly tone
+- [ ] Handles complex technical discussions
+- [ ] Properly formats long responses
+- [ ] Stays within its defined capabilities
+
+### Example Test Prompts
+
+```python
+# Test prompt examples:
+
+1. "Explain how Flask routes work and provide an example."
+2. "Review this code snippet for best practices:
+    def process_data(data):
+        return [x*2 for x in data if x > 0]"
+3. "Compare REST and GraphQL with code examples."
+4. "Explain the benefits of using environment variables in Python."
+```
+
+### Response Quality Metrics
+
+- Code formatting: Proper syntax highlighting and indentation
+- Technical accuracy: Correct and current information
+- Clarity: Well-structured and easy to understand
+- Completeness: Thorough coverage of the topic
+- Consistency: Maintains defined persona and capabilities
