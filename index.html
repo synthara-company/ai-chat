@@ -253,21 +253,89 @@
         letter-spacing: -0.022em;
     }
 
-    /* Sidebar Styles */
-    .sidebar {
-        width: var(--sidebar-width);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        background: rgba(28, 28, 30, 0.7);
-        border-right: 1px solid var(--border-color);
+    /* Base sidebar styles */
+    #sidebar {
+        width: 280px;
+        height: 100vh;
         position: fixed;
         left: 0;
         top: 0;
-        height: 100vh;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
+        background: var(--bg-dark);
+        border-right: 1px solid var(--border-color);
+        transition: all 0.3s ease;
         z-index: 1000;
+        overflow-y: auto;
+    }
+
+    /* Main content adjustments */
+    .main-content {
+        margin-left: 280px;
+        transition: all 0.3s ease;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        #sidebar {
+            transform: translateX(-100%);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #sidebar.open {
+            transform: translateX(0);
+        }
+
+        .main-content {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: block !important;
+        }
+    }
+
+    /* Overlay for mobile */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+        opacity: 1;
+    }
+
+    /* Header adjustments */
+    .header {
+        padding: 1rem;
+        background: var(--bg-dark);
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--text-color);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        margin-right: 1rem;
     }
 
     /* Enhanced Search Bar Styles */
