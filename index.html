@@ -1617,9 +1617,56 @@
             height: 35px;
         }
     }
+
+    /* Loading Screen */
+    .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-dark);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease-out;
+    }
+
+    .loading-screen.fade-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .logo-animation {
+        width: 120px;
+        height: 120px;
+        animation: logoEntrance 1.5s ease-out forwards;
+    }
+
+    @keyframes logoEntrance {
+        0% {
+            transform: scale(0.3);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <img src="https://avatars.githubusercontent.com/u/203538727?s=200&v=4" 
+             alt="Synthara Logo" 
+             class="logo-animation">
+    </div>
     <!-- Header -->
     <div class="header">
         <div class="brand">
@@ -2463,6 +2510,22 @@
 
         // Initialize back to top when DOM is loaded
         document.addEventListener('DOMContentLoaded', initBackToTop);
+
+        // Loading screen handler
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure all resources are loaded
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    const loadingScreen = document.querySelector('.loading-screen');
+                    loadingScreen.classList.add('fade-out');
+                    
+                    // Remove the loading screen from DOM after animation
+                    setTimeout(function() {
+                        loadingScreen.remove();
+                    }, 500); // Match this with the CSS transition duration
+                }, 1500); // Adjust this time to control how long the logo animation shows
+            });
+        });
     </script>
 </body>
 </html>
