@@ -1,5 +1,7 @@
 # Synthara - AI Chat Interface
 
+<img src="public/og-image.png" alt="Synthara AI Chat Interface" width="1200" height="630" />
+
 A web-based chat interface powered by Flask and Google Gemini, designed for interactive AI conversations.
 
 ## Tech Specs
@@ -18,6 +20,8 @@ A web-based chat interface powered by Flask and Google Gemini, designed for inte
 ```
 ├── app.py # Flask application
 ├── index.html # Frontend HTML file
+├── public/ # Public assets
+│   └── og-image.png # Open Graph image
 ├── requirements.txt # Python dependencies
 ├── vercel.json # Vercel deployment configuration
 ├── .env.example # Example environment file
