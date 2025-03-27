@@ -20,8 +20,6 @@ A web-based chat interface powered by Flask and Google Gemini, designed for inte
 ```
 ├── app.py # Flask application
 ├── index.html # Frontend HTML file
-├── public/ # Public assets
-│   └── og-image.png # Open Graph image
 ├── requirements.txt # Python dependencies
 ├── vercel.json # Vercel deployment configuration
 ├── .env.example # Example environment file
@@ -56,15 +54,11 @@ This application utilizes the following core technologies:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/bniladridas/synthara-ai-chat
+    git clone https://github.com/bniladridas/synthara-ai-chat.git
     cd synthara-ai-chat
     ```
 2.  **Create and activate a virtual environment:**
     ```bash
-    # For Unix/macOS
-    python3 -m venv venv
-
-    # For Windows
     python -m venv venv
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     ```
@@ -86,26 +80,33 @@ This application utilizes the following core technologies:
 
 ## Deployment to Vercel
 
-1.  **Push your code to a Git repository** (GitHub, GitLab, Bitbucket). Ensure `app.py`, `index.html`, `requirements.txt`, and `vercel.json` are committed.
-2.  **Log in to your Vercel account.**
-3.  Click **"Add New..."** -> **"Project"**.
-4.  **Import** your Git repository.
-5.  **Configure Project:**
-    *   **Project Name:** `Synthara` (or your choice).
-    *   **Framework Preset:** Vercel should automatically detect **"Python"** or **"Flask"** based on `requirements.txt` and `vercel.json`. If not, select **"Other"**.
-    *   **Build & Development Settings:** Vercel usually infers correctly from `vercel.json` and `requirements.txt`. Ensure the install command is `pip install -r requirements.txt`.
-6.  **Environment Variables:**
-    *   Navigate to the **"Environment Variables"** section.
-    *   Add your Google API Key:
-        *   **Name:** `GOOGLE_API_KEY`
-        *   **Value:** `YOUR_GOOGLE_API_KEY_HERE`
-    *   Ensure the variable is available for all environments (Production, Preview, Development).
-7.  Click **"Deploy"**.
-8.  Vercel will build and deploy your application. Once done, you'll get a public URL.
+1. **Push your code to a Git repository** (GitHub, GitLab, Bitbucket)
+   * Ensure `api/index.py`, `index.html`, `requirements.txt`, and `vercel.json` are committed
 
----
+2. **Log in to your Vercel account**
 
-**(Optional) Further Enhancements:**
-*   Add more robust error handling.
-*   Implement chat session persistence beyond local storage.
-*   Refine the UI/UX.
+3. Click **"Add New..."** → **"Project"**
+
+4. **Import** your Git repository
+
+5. **Configure Project:**
+   * **Project Name:** `Synthara` (or your choice)
+   * **Framework Preset:** Vercel should automatically detect **"Python"** or **"Flask"** based on `requirements.txt` and `vercel.json`. If not, select **"Other"**
+   * **Build & Development Settings:** Vercel usually infers correctly from `vercel.json` and `requirements.txt`. Ensure the install command is `pip install -r requirements.txt`
+
+6. **Environment Variables:**
+   * Navigate to the **"Environment Variables"** section
+   * Add your Google API Key:
+     * **Name:** `GOOGLE_API_KEY`
+     * **Value:** `YOUR_GOOGLE_API_KEY_HERE`
+   * Ensure the variable is available for all environments (Production, Preview, Development)
+
+7. Click **"Deploy"**
+
+8. Vercel will build and deploy your application. Once done, you'll get a public URL
+
+## Future Enhancements
+
+* Add more robust error handling
+* Implement chat session persistence beyond local storage
+* Refine the UI/UX
