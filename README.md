@@ -273,6 +273,6 @@ MIT License - [View License](LICENSE)
 ---
 
 <div align="center">
-  Made with ❤️ by Dragon Team | Powered by Vercel<br>
-  <sub>© 2024 Dragon AI. All rights reserved.</sub>
+  Made with ❤️ by Synthara Team | Powered by Vercel<br>
+  <sub>© 2025 Synthara. All rights reserved.</sub>
 </div>
