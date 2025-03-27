@@ -1,8 +1,6 @@
 # Synthara - AI Chat Interface
 
-<div align="center">
-  <img src="public/og-image.png" alt="Synthara AI Chat Interface" width="1200" height="630" style="max-width: 100%; height: auto;" />
-</div>
+![header](public/og-image.png)
 
 A web-based chat interface powered by Flask and Google Gemini, designed for interactive AI conversations.
 
