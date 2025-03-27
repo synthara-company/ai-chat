@@ -44,15 +44,22 @@ const PROMPT_SUGGESTIONS = [
 
 class PromptSuggestions {
     constructor() {
+        console.log('Initializing PromptSuggestions');
         this.init();
     }
 
     init() {
-        this.createSuggestionsContainer();
-        this.addScrollButtons();
+        try {
+            this.createSuggestionsContainer();
+            this.addScrollButtons();
+            console.log('PromptSuggestions initialized successfully');
+        } catch (error) {
+            console.error('Error initializing PromptSuggestions:', error);
+        }
     }
 
     createSuggestionsContainer() {
+        console.log('Creating suggestions container');
         const container = document.createElement('div');
         container.className = 'prompt-suggestions';
         container.innerHTML = `
@@ -66,7 +73,12 @@ class PromptSuggestions {
         `;
 
         const inputContainer = document.querySelector('.input-container');
+        if (!inputContainer) {
+            console.error('Input container not found');
+            return;
+        }
         inputContainer.insertBefore(container, inputContainer.firstChild);
+        console.log('Suggestions container created successfully');
     }
 
     usePrompt(prompt) {
@@ -113,5 +125,6 @@ class PromptSuggestions {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, creating PromptSuggestions instance');
     window.promptSuggestions = new PromptSuggestions();
 });
