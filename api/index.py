@@ -8,7 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize Flask app
-app = Flask(__name__, static_folder='..', static_url_path='')
+app = Flask(__name__, 
+    static_folder='../public',  # Point to the public directory
+    static_url_path='/public'   # Set the URL path prefix for static files
+)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -78,13 +81,11 @@ def generate_content():
 
 @app.route('/')
 def serve_frontend():
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory('../', 'index.html')
 
 @app.route('/public/<path:filename>')
 def serve_public(filename):
-    # Serve files from the public directory
-    public_dir = os.path.join(app.static_folder, 'public')
-    return send_from_directory(public_dir, filename)
+    return send_from_directory(app.static_folder, filename)
 
 if __name__ == '__main__':
     try:
