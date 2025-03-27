@@ -52,11 +52,15 @@ This application utilizes the following core technologies:
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/bniladridas/synthara-ai-chat.git
+    git clone https://github.com/bniladridas/synthara-ai-chat
     cd synthara-ai-chat
     ```
 2.  **Create and activate a virtual environment:**
     ```bash
+    # For Unix/macOS
+    python3 -m venv venv
+
+    # For Windows
     python -m venv venv
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     ```
