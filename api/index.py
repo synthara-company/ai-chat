@@ -99,7 +99,10 @@ def serve_frontend():
     return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
-    # Consider getting port from environment variable for deployment flexibility
-    port = int(os.environ.get('PORT', 5000))
-    # Set debug=False for production environments
-    app.run(debug=True, host='0.0.0.0', port=port)
+    try:
+        # Use port 5001 instead of 5000
+        port = 5001
+        logging.info(f"Starting server on port {port}")
+        app.run(debug=True, host='0.0.0.0', port=port)
+    except Exception as e:
+        logging.error(f"Failed to start server: {e}")
